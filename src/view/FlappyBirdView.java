@@ -20,6 +20,7 @@ public class FlappyBirdView extends JFrame {
   public static final Dimension WINDOW_DIM = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
   public static final Color COLOR_BACKGROUND = Color.BLACK;
   private FlappyBirdField fieldPanel;
+  private SoundManager soundManager = new SoundManager();
 
   public FlappyBirdView() {
     super("Flappy Bird");
@@ -47,6 +48,8 @@ public class FlappyBirdView extends JFrame {
   }
 
   public void updateView(GameState state, int tickCount) {
+
     fieldPanel.updateState(state);
+    soundManager.manageStack(state.getSoundsStack());
   }
 }

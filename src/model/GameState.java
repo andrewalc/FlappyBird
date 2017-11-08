@@ -2,6 +2,7 @@ package model;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import view.FlappyBirdField;
 import view.FlappyBirdView;
@@ -16,9 +17,8 @@ public class GameState {
   private ArrayList<Column> columns = new ArrayList<Column>();
 
 
-  public int getScore() {
-    return score;
-  }
+  private Stack<FlappySounds> soundsStack = new Stack<>();
+
 
   private int score = 0;
   private boolean gameOver = false;
@@ -39,10 +39,12 @@ public class GameState {
         if (this.p1.isAlive()) {
           if (this.p1.getPosition().getY() > 0 && this.p1.getPosition().getY() < FlappyBirdView
                   .WINDOW_HEIGHT) {
-            this.p1.getVelocity().setLocation(this.p1.getVelocity().getX(), -Player.ACCELERATION_JUMP);
-            this.p1.getPosition().setLocation(this.p1.getPosition().getX(), this.p1.getPosition().getY() -
+            this.p1.getVelocity().setLocation(this.p1.getVelocity().getX(), -Player
+                    .ACCELERATION_JUMP);
+            this.p1.getPosition().setLocation(this.p1.getPosition().getX(), this.p1.getPosition()
+                    .getY() -
                     Player.ACCELERATION_JUMP);
-            //this.playFlapSound();
+            this.playFlapSound();
           }
         }
         break;
@@ -54,7 +56,19 @@ public class GameState {
     }
   }
 
-  public void restartGame(){
+  private void playFlapSound() {
+    this.soundsStack.push(FlappySounds.S_FLAP);
+  }
+
+  private void playScoreSound() {
+    this.soundsStack.push(FlappySounds.S_SCORE);
+  }
+
+  private void playDeathSound() {
+    this.soundsStack.push(FlappySounds.S_DEATH);
+  }
+
+  public void restartGame() {
     this.p1 = new Player((int) FlappyBirdField.FIELD_DIM.getWidth() / 2, (int)
             FlappyBirdField.FIELD_DIM.getHeight() / 2);
     this.columns = new ArrayList<Column>();
@@ -101,7 +115,7 @@ public class GameState {
     for (Column c : this.columns) {
       if (!c.isPassed() && p1.hasPassedColumn(c)) {
         this.score++;
-        //this.playScoreSound();
+        this.playScoreSound();
       }
     }
   }
@@ -112,7 +126,7 @@ public class GameState {
         System.out.println("COLLISION");
         c.collision();
         p1.kill();
-        //this.playDeathSounds();
+        this.playDeathSound();
       }
     }
   }
@@ -137,5 +151,13 @@ public class GameState {
 
   public ArrayList<Column> getColumns() {
     return this.columns;
+  }
+
+  public Stack<FlappySounds> getSoundsStack() {
+    return soundsStack;
+  }
+
+  public int getScore() {
+    return score;
   }
 }

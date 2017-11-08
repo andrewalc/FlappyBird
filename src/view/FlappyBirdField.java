@@ -54,6 +54,9 @@ public class FlappyBirdField extends JPanel {
       if (c.isCollided()) {
         g.setColor(Color.RED);
       }
+      if (c.isPassed()) {
+        g.setColor(Color.GREEN);
+      }
       // Draws the full column
       g.drawRect((int) c.getPosition().getX(), (int) c.getPosition().getY(), (int) Column.WIDTH,
               (int) FlappyBirdField.FIELD_DIM.getHeight());
