@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
 import view.FlappyBirdView;
@@ -67,30 +66,5 @@ public class Player {
       this.velocity.setLocation(0, 0);
     }
   }
-
-  /**
-   * Method that handles KeyEvents for the Craft. Includes directional movement, reloading, and
-   * shooting bullets.
-   *
-   * @param keyEvent Int Keyevent to interpret.
-   */
-  public void keyMove(int keyEvent) {
-    switch (keyEvent) {
-      case KeyEvent.VK_SPACE:
-        if (alive) {
-          if (this.position.getY() > 0 && this.position.getY() < FlappyBirdView.WINDOW_HEIGHT) {
-            this.velocity.setLocation(this.velocity.getX(), -ACCELERATION_JUMP);
-            this.position.setLocation(this.position.getX(), this.position.getY() -
-                    ACCELERATION_JUMP);
-            //this.playFlapSound();
-          }
-        }
-        break;
-
-      default:
-        break;
-    }
-  }
-
 
 }

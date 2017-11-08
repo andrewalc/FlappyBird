@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import view.FlappyBirdField;
@@ -24,6 +25,40 @@ public class GameState {
 
   public boolean isGameOver() {
     return this.gameOver;
+  }
+
+
+  /**
+   * Method that handles KeyEvents for FlappyBird.
+   *
+   * @param keyEvent Int Keyevent to interpret.
+   */
+  public void keyMove(int keyEvent) {
+    switch (keyEvent) {
+      case KeyEvent.VK_SPACE:
+        if (this.p1.isAlive()) {
+          if (this.p1.getPosition().getY() > 0 && this.p1.getPosition().getY() < FlappyBirdView
+                  .WINDOW_HEIGHT) {
+            this.p1.getVelocity().setLocation(this.p1.getVelocity().getX(), -Player.ACCELERATION_JUMP);
+            this.p1.getPosition().setLocation(this.p1.getPosition().getX(), this.p1.getPosition().getY() -
+                    Player.ACCELERATION_JUMP);
+            //this.playFlapSound();
+          }
+        }
+        break;
+      case KeyEvent.VK_R:
+        this.restartGame();
+
+      default:
+        break;
+    }
+  }
+
+  public void restartGame(){
+    this.p1 = new Player((int) FlappyBirdField.FIELD_DIM.getWidth() / 2, (int)
+            FlappyBirdField.FIELD_DIM.getHeight() / 2);
+    this.columns = new ArrayList<Column>();
+    this.score = 0;
   }
 
   public void onTick(int tickCount) {
