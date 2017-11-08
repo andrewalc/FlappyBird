@@ -176,7 +176,6 @@ public class GameState {
 
     if (!c.isPassed() && !c.isCollided() && (Math.abs(p.getPosition().getX() - c.getPosition()
             .getX()) < Player.RADIUS * 2)) {
-      System.out.println("contemplating");
       return p.getPosition().getY() > c.getYOffset() + c.getGapHeight() || p.getPosition().getY() <
               c.getYOffset();
     }

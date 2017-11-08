@@ -48,8 +48,6 @@ public class FlappyBirdController {
   public void startFlappyBird() {
     view.initialize();
     while (!state.isGameOver()) {
-      //System.out.println(state.getPlayer().getVelocity());
-
       Instant start = Instant.now();
 
       state.onTick(tickCount);
