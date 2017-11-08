@@ -15,8 +15,8 @@ import javax.swing.WindowConstants;
 import model.GameState;
 
 public class FlappyBirdView extends JFrame {
-  public static final int WINDOW_WIDTH = 500;
-  public static final int WINDOW_HEIGHT = 700;
+  public static final int WINDOW_WIDTH = 450;
+  public static final int WINDOW_HEIGHT = 750;
   public static final Dimension WINDOW_DIM = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
   public static final Color COLOR_BACKGROUND = Color.BLACK;
   private FlappyBirdField fieldPanel;

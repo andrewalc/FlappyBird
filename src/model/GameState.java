@@ -14,8 +14,8 @@ public class GameState {
 
   private Player p1 = new Player((int) FlappyBirdField.FIELD_DIM.getWidth() / 2, (int)
           FlappyBirdField.FIELD_DIM.getHeight() / 2);
-  private ArrayList<Column> columns = new ArrayList<Column>();
 
+  private ArrayList<Column> columns = new ArrayList<Column>();
 
   private Stack<FlappySounds> soundsStack = new Stack<>();
 
@@ -121,8 +121,13 @@ public class GameState {
   }
 
   public void checkCollisions() {
+    if (p1.getPosition().getY() >= FlappyBirdView.WINDOW_HEIGHT - Player.RADIUS * 3) {
+      p1.kill();
+      this.playDeathSound();
+    }
+
     for (Column c : this.columns) {
-      if (!c.isPassed() && p1.isAlive() && this.collisionCheck(this.p1, c)) {
+      if (!c.isPassed() && p1.isAlive() && this.columnCollisionCheck(this.p1, c)) {
         System.out.println("COLLISION");
         c.collision();
         p1.kill();
@@ -131,7 +136,7 @@ public class GameState {
     }
   }
 
-  public boolean collisionCheck(Player p, Column c) {
+  public boolean columnCollisionCheck(Player p, Column c) {
     // collisions for columns with upward offset
 
     if (!c.isPassed() && !c.isCollided() && (Math.abs(p.getPosition().getX() - c.getPosition()
@@ -140,8 +145,8 @@ public class GameState {
       return p.getPosition().getY() > c.getYOffset() + c.getGapHeight() || p.getPosition().getY() <
               c.getYOffset();
     }
-    // collision for when the player hits the floor
-    return p1.getPosition().getY() >= FlappyBirdView.WINDOW_HEIGHT - Player.RADIUS * 3;
+    // collision for when the player hits the ground out zone (slightly above the ground)
+    return false;
   }
 
 

@@ -41,7 +41,7 @@ public class Player {
   }
 
   boolean hasPassedColumn(Column c) {
-    if ((this.position.getX() - Player.RADIUS) - (c.getPosition().getX() + Column.WIDTH) > 0) {
+    if (this.position.getX() - (c.getPosition().getX() + Column.WIDTH) > 0) {
       c.passed();
       return true;
     }
@@ -61,7 +61,7 @@ public class Player {
     }
 
     // Ground prevention
-    if (this.position.getY() >= FlappyBirdView.WINDOW_HEIGHT - RADIUS * 3) {
+    if (this.position.getY() >= FlappyBirdView.WINDOW_HEIGHT) {
       this.position.setLocation(this.position.getX(), FlappyBirdView.WINDOW_HEIGHT - RADIUS * 3);
       this.velocity.setLocation(0, 0);
     }
