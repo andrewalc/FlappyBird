@@ -13,7 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import model.FlappySounds;
 
 /**
- * Created by Andrew Alcala on 11/8/2017.
+ * Sound manage for Flappy Bird.
  */
 public class SoundManager {
   SoundManager() {
@@ -26,16 +26,14 @@ public class SoundManager {
         case S_FLAP:
           try {
             this.playSound("sfx_wing.wav");
-          }
-          catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
           break;
         case S_SCORE:
           try {
             this.playSound("sfx_point.wav");
-          }
-          catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
           break;
@@ -43,15 +41,15 @@ public class SoundManager {
           try {
             this.playSound("sfx_hit.wav");
             this.playSound("sfx_die.wav");
-          }
-          catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
           break;
 
         default:
           break;
-      }    }
+      }
+    }
 
   }
 

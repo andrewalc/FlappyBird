@@ -16,7 +16,7 @@ import model.GameState;
 import model.Player;
 
 /**
- * Created by Andrew Alcala on 11/7/2017.
+ * JPanel of the FlappyBird Game.
  */
 public class FlappyBirdField extends JPanel {
   private GameState state;

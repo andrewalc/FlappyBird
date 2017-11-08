@@ -1,7 +1,7 @@
 package view;
 
 /**
- * Created by Andrew Alcala on 11/7/2017.
+ * JFrame view for FlappyBird.
  */
 
 import java.awt.BorderLayout;
@@ -15,6 +15,7 @@ import javax.swing.WindowConstants;
 import model.GameState;
 
 public class FlappyBirdView extends JFrame {
+  // Frame Dimensions
   public static final int WINDOW_WIDTH = 450;
   public static final int WINDOW_HEIGHT = 750;
   public static final Dimension WINDOW_DIM = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -43,10 +44,19 @@ public class FlappyBirdView extends JFrame {
     pack();
   }
 
+  /**
+   * Initializes the view.
+   */
   public void initialize() {
     setVisible(true);
   }
 
+  /**
+   * Updates visual view using the game state.
+   *
+   * @param state     The current model game state.
+   * @param tickCount The current tick.
+   */
   public void updateView(GameState state, int tickCount) {
 
     fieldPanel.updateState(state);
