@@ -25,22 +25,22 @@ public class SoundManager {
       switch (sound) {
         case S_FLAP:
           try {
-            this.playSound("sfx_wing.wav");
+            this.playSound("sounds/sfx_wing.wav");
           } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
           break;
         case S_SCORE:
           try {
-            this.playSound("sfx_point.wav");
+            this.playSound("sounds/sfx_point.wav");
           } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
           break;
         case S_DEATH:
           try {
-            this.playSound("sfx_hit.wav");
-            this.playSound("sfx_die.wav");
+            this.playSound("sounds/sfx_hit.wav");
+            this.playSound("sounds/sfx_die.wav");
           } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
           }
