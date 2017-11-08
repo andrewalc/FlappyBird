@@ -21,6 +21,8 @@ public class GameState {
 
 
   private int score = 0;
+
+  private int highScore = 0;
   private boolean gameOver = false;
 
   public boolean isGameOver() {
@@ -115,24 +117,29 @@ public class GameState {
     for (Column c : this.columns) {
       if (!c.isPassed() && p1.hasPassedColumn(c)) {
         this.score++;
+        if (this.score >= this.highScore) {
+          this.highScore = this.score;
+        }
         this.playScoreSound();
       }
     }
   }
 
   public void checkCollisions() {
+    boolean collision = false;
     if (p1.getPosition().getY() >= FlappyBirdView.WINDOW_HEIGHT - Player.RADIUS * 3) {
-      p1.kill();
-      this.playDeathSound();
+      collision = true;
+    }
+    for (Column c : this.columns) {
+      if (!collision && !c.isPassed() && p1.isAlive() && this.columnCollisionCheck(this.p1, c)) {
+        collision = true;
+        c.collision();
+      }
     }
 
-    for (Column c : this.columns) {
-      if (!c.isPassed() && p1.isAlive() && this.columnCollisionCheck(this.p1, c)) {
-        System.out.println("COLLISION");
-        c.collision();
-        p1.kill();
-        this.playDeathSound();
-      }
+    if (collision) {
+      p1.kill();
+      this.playDeathSound();
     }
   }
 
@@ -164,5 +171,9 @@ public class GameState {
 
   public int getScore() {
     return score;
+  }
+
+  public int getHighScore() {
+    return highScore;
   }
 }

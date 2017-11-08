@@ -23,6 +23,8 @@ public class FlappyBirdField extends JPanel {
   public static final Dimension FIELD_DIM = new Dimension(FlappyBirdView.WINDOW_WIDTH,
           FlappyBirdView.WINDOW_HEIGHT);
   private Font scoreFont = new Font("Ariel", Font.PLAIN, 40);
+  private Font highScoreFont = new Font("Ariel", Font.BOLD, 15);
+
   private Font msgFont = new Font("Ariel", Font.PLAIN, 30);
 
   Image bgImage = new ImageIcon("background.jpg").getImage().getScaledInstance((int)
@@ -73,6 +75,8 @@ public class FlappyBirdField extends JPanel {
     g.setColor(Color.YELLOW);
     g.setFont(scoreFont);
     g.drawString("" + state.getScore(), (int) FIELD_DIM.getWidth() / 2, 100);
+    g.setFont(highScoreFont);
+    g.drawString("High Score: " + state.getHighScore(), 10, 20);
   }
 
   private void drawColumns(Graphics g) {
@@ -107,10 +111,11 @@ public class FlappyBirdField extends JPanel {
     g2d.rotate(Math.toRadians(state.getPlayer().getVelocity().getY()) * 1.5,
             state.getPlayer().getPosition().getX(), state.getPlayer().getPosition().getY());
 
-    g.setColor(Color.GREEN);
-    g.fillOval((int) state.getPlayer().getPosition().getX() - Player.RADIUS, (int) state
-            .getPlayer().getPosition().getY() - Player.RADIUS, Player.RADIUS * 2, Player.RADIUS *
-            2);
+    // Draws shape where player hitbox is accurate.
+//    g.setColor(Color.GREEN);
+//    g.fillOval((int) state.getPlayer().getPosition().getX() - Player.RADIUS, (int) state
+//            .getPlayer().getPosition().getY() - Player.RADIUS, Player.RADIUS * 2, Player.RADIUS *
+//            2);
 
     g.drawImage(playerImage, (int) state.getPlayer().getPosition().getX() - Player.RADIUS * 3,
             (int) state.getPlayer().getPosition().getY() - Player.RADIUS * 3, null);
