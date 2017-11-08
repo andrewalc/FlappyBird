@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import view.FlappyBirdField;
 import view.FlappyBirdView;
 
 /**
@@ -9,8 +10,97 @@ import view.FlappyBirdView;
  */
 public class GameState {
 
-  private Player p1 = new Player(FlappyBirdView.WINDOW_HEIGHT / 2, FlappyBirdView.WINDOW_WIDTH / 2);
+  private Player p1 = new Player((int) FlappyBirdField.FIELD_DIM.getWidth() / 2, (int)
+          FlappyBirdField.FIELD_DIM.getHeight() / 2);
   private ArrayList<Column> columns = new ArrayList<Column>();
+
+
+  public int getScore() {
+    return score;
+  }
+
   private int score = 0;
-  private boolean inPlay = true;
+  private boolean gameOver = false;
+
+  public boolean isGameOver() {
+    return this.gameOver;
+  }
+
+  public void onTick(int tickCount) {
+    p1.move();
+    if (p1.isAlive()) {
+      checkCollisions();
+      removeColumns();
+      createColumn(tickCount);
+      moveColumns();
+      countScore();
+    }
+  }
+
+  // creates a new column every 115th tick
+  public void createColumn(int tickCount) {
+    if (tickCount % 55 == 0) {
+      this.columns.add(new Column((int) FlappyBirdField.FIELD_DIM.getWidth() + Player.RADIUS,
+              0));
+    }
+  }
+
+  // transitions all columns to the left
+  public void moveColumns() {
+    for (Column c : this.columns) {
+      c.getPosition().setLocation(c.getPosition().getX() - 4.5, c.getPosition().getY());
+    }
+  }
+
+  // removes columns that have gone offscreen on the left
+  public void removeColumns() {
+    if (this.columns.size() > 1) {
+      if (this.columns.get(0).getPosition().getX() < 0) {
+        this.columns.remove(0);
+      }
+    }
+  }
+
+  // updates the current score
+  public void countScore() {
+    for (Column c : this.columns) {
+      if (!c.isPassed() && p1.hasPassedColumn(c)) {
+        this.score++;
+        //this.playScoreSound();
+      }
+    }
+  }
+
+  public void checkCollisions() {
+    for (Column c : this.columns) {
+      if (!c.isPassed() && p1.isAlive() && this.collisionCheck(this.p1, c)) {
+        System.out.println("COLLISION");
+        c.collision();
+        p1.kill();
+        //this.playDeathSounds();
+      }
+    }
+  }
+
+  public boolean collisionCheck(Player p, Column c) {
+    // collisions for columns with upward offset
+
+    if (!c.isPassed() && !c.isCollided() && (Math.abs(p.getPosition().getX() - c.getPosition()
+            .getX()) < Player.RADIUS * 2)) {
+      System.out.println("contemplating");
+      return p.getPosition().getY() > c.getYOffset() + c.getGapHeight() || p.getPosition().getY() <
+              c.getYOffset();
+    }
+    // collision for when the player hits the floor
+    return p1.getPosition().getY() >= FlappyBirdView.WINDOW_HEIGHT - Player.RADIUS * 3;
+  }
+
+
+  public Player getPlayer() {
+    return this.p1;
+  }
+
+  public ArrayList<Column> getColumns() {
+    return this.columns;
+  }
 }
