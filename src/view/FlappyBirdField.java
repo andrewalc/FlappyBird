@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
@@ -64,6 +66,11 @@ public class FlappyBirdField extends JPanel {
   }
 
   private void drawPlayer(Graphics g) {
+    Graphics2D g2d = (Graphics2D) g;
+    AffineTransform oldTransform = g2d.getTransform();
+    g2d.rotate(Math.toRadians(state.getPlayer().getVelocity().getY()
+    ) * 1.5, state.getPlayer().getPosition().getX(), state.getPlayer().getPosition().getY());
+
     g.setColor(Color.ORANGE);
     g.drawRect((int) state.getPlayer().getPosition().getX(), (int) state.getPlayer().getPosition
             ().getY(), Player.RADIUS * 2, 1);
@@ -74,6 +81,8 @@ public class FlappyBirdField extends JPanel {
     g.drawOval((int) state.getPlayer().getPosition().getX() - Player.RADIUS, (int) state
             .getPlayer().getPosition().getY() - Player.RADIUS, Player.RADIUS * 2, Player.RADIUS *
             2);
+    g2d.setTransform(oldTransform);
+
 
   }
 
