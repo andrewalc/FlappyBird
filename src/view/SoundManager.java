@@ -2,6 +2,7 @@ package view;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Stack;
 
 import javax.sound.sampled.AudioInputStream;
@@ -26,14 +27,14 @@ public class SoundManager {
         case S_FLAP:
           try {
             this.playSound("sounds/sfx_wing.wav");
-          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | URISyntaxException e) {
             e.printStackTrace();
           }
           break;
         case S_SCORE:
           try {
             this.playSound("sounds/sfx_point.wav");
-          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | URISyntaxException e) {
             e.printStackTrace();
           }
           break;
@@ -41,7 +42,7 @@ public class SoundManager {
           try {
             this.playSound("sounds/sfx_hit.wav");
             this.playSound("sounds/sfx_die.wav");
-          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+          } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | URISyntaxException e) {
             e.printStackTrace();
           }
           break;
@@ -55,7 +56,7 @@ public class SoundManager {
 
   public static void playSound(String soundFile) throws LineUnavailableException, IOException,
           UnsupportedAudioFileException {
-    File f = new File(soundFile);
+    File f = new File(SoundManager.class.getClassLoader().getResource(soundFile).getPath());
     AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
     Clip clip = AudioSystem.getClip();
     clip.open(audioIn);

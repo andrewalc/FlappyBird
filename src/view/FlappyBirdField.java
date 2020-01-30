@@ -27,10 +27,11 @@ public class FlappyBirdField extends JPanel {
 
   private Font msgFont = new Font("Ariel", Font.PLAIN, 30);
 
-  Image bgImage = new ImageIcon("images/background.jpg").getImage().getScaledInstance((int)
+  Image bgImage = new ImageIcon(getClass().getClassLoader().getResource("images/background.jpg")).getImage().getScaledInstance((int)
                   FlappyBirdField.FIELD_DIM.getWidth(),
           (int) FlappyBirdField.FIELD_DIM.getHeight(), Image.SCALE_DEFAULT);
-  Image playerImage = new ImageIcon("images/flappy_bird.png").getImage();
+
+  Image playerImage = new ImageIcon(getClass().getClassLoader().getResource("images/flappy_bird.png")).getImage();
 
 
   public FlappyBirdField() {
